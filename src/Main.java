@@ -5,10 +5,9 @@ import java.io.Reader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.stream.IntStream;
 
 public class Main {
 
@@ -506,7 +505,6 @@ public class Main {
 
     while(n > 1) {
       currentFactorial = currentFactorial.multiply(BigInteger.valueOf(n));
-      System.out.println(n);
       n = n - 1;
     }
 
@@ -698,7 +696,6 @@ public class Main {
     }
 
     return numOfDigits;
-
   }
 
   public static long fibo() {
@@ -910,11 +907,7 @@ public class Main {
     return totalSum;
   }
 
-  public static void coinSums(final int[] coins,
-                              final int[] quantities,
-                              int sum,
-                              final int coinNum,
-                              final int targetCoin) {
+  public static void coinSums(final int[] coins, final int[] quantities, int sum, final int coinNum, final int targetCoin) {
     if(coinNum == coins.length) {
       if(sum == targetCoin) {
         quantities[quantities.length - 1]++;
@@ -1478,8 +1471,107 @@ public class Main {
     return sum;
   }
 
+  private static List<Integer> permute(final Integer number) {
+    final Integer[] perm = {0, 0, 0, 0};
+    final Integer[] digits = {0, 0, 0, 0};
+    final List<Integer> perms = new ArrayList<>();
+
+    digits[0] = number / 1000;
+    digits[1] = number / 100 % 10;
+    digits[2] = number / 10 % 10;
+    digits[3] = number % 10;
+
+    permuteHelper(digits, perm, perms, 0);
+
+    return perms;
+  }
+
+  private static Integer formAndGetNumber(final Integer[] digits) {
+    return digits[0] * 1000 + digits[1] * 100 + digits[2] * 10 + digits[3];
+  }
+
+  private static void swap(final Integer[] digits, final Integer leftIdx, final Integer rightIdx) {
+    final Integer temp = digits[leftIdx];
+    digits[leftIdx] = digits[rightIdx];
+    digits[rightIdx] = temp;
+  }
+
+  private static void permuteHelper(final Integer[] digits, final Integer[] perm, final List<Integer> perms, int index) {
+    if(index == digits.length) {
+      perms.add(formAndGetNumber(perm));
+    }
+
+    for(int i = index; i < digits.length; i++) {
+      perm[index] = digits[i];
+      swap(digits, index, i);
+      permuteHelper(digits, perm, perms, index + 1);
+      swap(digits, index, i);
+    }
+  }
+
+  public static void printPrimePermutation() {
+    IntStream.rangeClosed(1001, 10000).forEach((number) -> {
+      if(isPrime(number)) {
+        List<Integer> perms = permute(number);
+        String rep = Integer.toString(number);
+        int primeCount = 1;
+
+        for(Integer perm : perms) {
+          if(perm > number && isPrime(perm) && ((perm - number == 3330 && primeCount == 1) || (perm - number == 6660 && primeCount == 2))) {
+            primeCount++;
+            rep = rep.concat(Integer.toString(perm));
+          }
+        }
+
+        if(primeCount == 3) {
+          System.out.println(rep);
+        }
+      }
+    });
+  }
+
+  public static Integer consecutivePrimeSum(final Integer limit) {
+    final List<Integer> primes = new ArrayList<>();
+    final Set<Integer> primesLookup = new HashSet<>();
+
+    IntStream.rangeClosed(0, limit).forEach(number -> {
+      if(isPrime(number)) {
+        primes.add(number);
+        primesLookup.add(number);
+      }
+    });
+
+    int currentIdx = 0;
+    int maxLength = 0;
+    int maxSumPrimeLength = 0;
+    int currentSumPrime;
+
+    while(currentIdx <= limit) {
+      int currentSum = 0;
+      int currentLength = 0;
+
+      for(int i = currentIdx; currentSum < limit && i < primes.size(); i++) {
+        currentSum += primes.get(i);
+        currentLength++;
+
+        if (primesLookup.contains(currentSum)) {
+          currentSumPrime = currentSum;
+
+          if (currentLength > maxLength) {
+            maxLength = currentLength;
+            maxSumPrimeLength = currentSumPrime;
+          }
+        }
+      }
+
+      currentIdx++;
+    }
+
+    return maxSumPrimeLength;
+  }
+
   public static void main(String[] args) {
-    System.out.println("Hello World!");
+    System.out.println(consecutivePrimeSum(1000000));
   }
 
 }
