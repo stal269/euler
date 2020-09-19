@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.stream.IntStream;
 
 public class Main {
@@ -1554,10 +1553,10 @@ public class Main {
         currentSum += primes.get(i);
         currentLength++;
 
-        if (primesLookup.contains(currentSum)) {
+        if(primesLookup.contains(currentSum)) {
           currentSumPrime = currentSum;
 
-          if (currentLength > maxLength) {
+          if(currentLength > maxLength) {
             maxLength = currentLength;
             maxSumPrimeLength = currentSumPrime;
           }
