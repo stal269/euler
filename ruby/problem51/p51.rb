@@ -17,10 +17,6 @@ def considerRequestedFamilySize(family, size)
         end
     end
 
-    # for debugging
-    # puts "#{familyPrimes.inspect} #{family}";
-    #  
-
     if familyPrimes.length == size
         puts "#{familyPrimes} #{family}";
     end
