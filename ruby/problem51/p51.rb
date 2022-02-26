@@ -1,11 +1,12 @@
-
+require 'date';
 require_relative '../utils.rb';
 
-$primes = eSieve(2, 1000000);
+startTime = Time.now.to_f;
 
+$primes = eSieve(2, 1000000);
 $placeholder = "#";
 
-def considerRequestedFamilySize(family, size)
+def isRequestedFamilySize(family, size)
     familyPrimes = [];
     startNumber = family[0] == $placeholder ? 1 : 0;
     
@@ -19,7 +20,11 @@ def considerRequestedFamilySize(family, size)
 
     if familyPrimes.length == size
         puts "#{familyPrimes} #{family}";
+
+        return true;
     end
+
+    return false;
 end
 
 def getRelevantChars(currentFamily, index, numberOfDigits)
@@ -41,32 +46,50 @@ def getRelevantChars(currentFamily, index, numberOfDigits)
         return [$placeholder];
     end
 
+    if index == numberOfDigits - 1
+        return ["1", "3", "7", "9"];
+    end
+
     return characters;
 end
 
 
 def checkIfHavePrimeFamilyHelper(currentFamily, index, numberOfDigits, size)
     if index == numberOfDigits
-        considerRequestedFamilySize(currentFamily, size)
+        if isRequestedFamilySize(currentFamily, size)
+            return true;
+        end
 
-        return;
+        return false;
     end
 
     characters = getRelevantChars(currentFamily, index, numberOfDigits);
+    isFound = false;
 
+    # do we need to consider everything here or we can just wait for the first true?
     for char in characters
-        checkIfHavePrimeFamilyHelper(currentFamily + char, index + 1, numberOfDigits, size);
+        isFound ||= checkIfHavePrimeFamilyHelper(currentFamily + char, index + 1, numberOfDigits, size);
     end
+
+    return isFound;
 end
 
 def checkIfHavePrimeFamily(numberOfDigits, size)
-    checkIfHavePrimeFamilyHelper("", 0, numberOfDigits, size);
+    return checkIfHavePrimeFamilyHelper("", 0, numberOfDigits, size);
 end
 
 def primeDigitReplacement(size)
-    for numberOfDigits in 2..10
-        checkIfHavePrimeFamily(numberOfDigits, size);
+    numberOfDigits = 2;
+
+    for numberOfDigits in 2..6
+        if checkIfHavePrimeFamily(numberOfDigits, size)
+            break;
+        end
     end
 end
 
 primeDigitReplacement(8);
+
+endTime = Time.now.to_f;
+
+puts "the program ran for #{(endTime - startTime).round(3)}";
