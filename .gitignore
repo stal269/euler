@@ -1,5 +1,8 @@
 *.iml
-.idea/**
+/**/.idea/**
 .DS_Store
 out/
 .vscode
+
+/**/project
+/**/target

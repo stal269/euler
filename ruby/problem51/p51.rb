@@ -47,7 +47,7 @@ def getRelevantChars(currentFamily, index, numberOfDigits)
     end
 
     if index == numberOfDigits - 1
-        return ["1", "3", "7", "9"];
+        return %w[1 3 7 9];
     end
 
     return characters;
@@ -66,7 +66,6 @@ def checkIfHavePrimeFamilyHelper(currentFamily, index, numberOfDigits, size)
     characters = getRelevantChars(currentFamily, index, numberOfDigits);
     isFound = false;
 
-    # do we need to consider everything here or we can just wait for the first true?
     for char in characters
         isFound ||= checkIfHavePrimeFamilyHelper(currentFamily + char, index + 1, numberOfDigits, size);
     end
