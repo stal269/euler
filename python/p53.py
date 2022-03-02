@@ -1,4 +1,5 @@
 from math import factorial
+import time
 
 valueBar = 1000000
 
@@ -28,4 +29,8 @@ def combinatoricSelections():
 
     return counterMillion
 
+begin = time.time()
 print(combinatoricSelections())
+end = time.time()
+
+print("total program runtime is", round(end - begin, 3) * 1000, "ms")
