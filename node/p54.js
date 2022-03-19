@@ -212,6 +212,7 @@ const computePlayer1Wins = (lines => {
             player1Wins++;
         }
     });
+    
 
     console.log(`player 1 won ${player1Wins} games`);
 })
