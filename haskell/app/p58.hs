@@ -34,8 +34,6 @@ spiralPrimesHelper idx total pNum
         newPNum = pNum + toInteger (length (filter isPrime [x1,x2,y1,y2]))
         pPercentage = fromIntegral newPNum / (fromIntegral newTotal + 1)
 
-
--- main :: IO ()
 main = defaultMain [
     bgroup "spiral" [
                         bench "1" $ whnf (spiralPrimesHelper 1 0) 0
