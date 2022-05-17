@@ -1,6 +1,8 @@
 module Main where
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Data.Set (Set)
+import qualified Data.Set as Set
 
 isPointer :: Int -> Int -> Bool
 isPointer a b = prefix == postfix
@@ -27,18 +29,20 @@ allPairs = concat [pairs | lp <- allListPairs, let pairs = [((x, idx1), [(y, idx
 
 listsMap = Map.fromListWith (++) allPairs
 
-sixths = [[fst x1, fst x2, fst x3, fst x4, fst x5, fst x6] | x1 <- Map.keys listsMap,
+sixths = Set.fromList (map sum [[fst x1, fst x2, fst x3, fst x4, fst x5, fst x6] | x1 <- Map.keys listsMap,
     x2 <- getValue (Map.lookup x1 listsMap),
     x3 <- getValue (Map.lookup x2 listsMap),
     x4 <- getValue (Map.lookup x3 listsMap),
     x5 <- getValue (Map.lookup x4 listsMap),
     x6 <- getValue (Map.lookup x5 listsMap),
     elem x1 (getValue (Map.lookup x6 listsMap)),
-    (snd x1) /= (snd x2), (snd x1) /= (snd x2), (snd x1) /= (snd x3), (snd x1) /= (snd x4),
+    (snd x1) /= (snd x2), (snd x1) /= (snd x2), (snd x1) /= (snd x3),
     (snd x1) /= (snd x4), (snd x1) /= (snd x5), (snd x1) /= (snd x6),
-    (snd x2) /= (snd x3), (snd x2) /= (snd x4), (snd x2) /= (snd x5), (snd x2) /= (snd x6), (snd x3) /= (snd x4), (snd x3) /= (snd x5), (snd x3) /= (snd x5), (snd x3) /= (snd x6),
-    (snd x4) /= (snd x5), (snd x4) /= (snd x6), (snd x5) /= (snd x6)]
+    (snd x2) /= (snd x3), (snd x2) /= (snd x4), (snd x2) /= (snd x5),
+    (snd x2) /= (snd x6), (snd x3) /= (snd x4), (snd x3) /= (snd x5),
+    (snd x3) /= (snd x5), (snd x3) /= (snd x6), (snd x4) /= (snd x5),
+    (snd x4) /= (snd x6), (snd x5) /= (snd x6)])
 
 main :: IO ()
 main = do
-    print (map sum sixths)
+    print (sixths)
