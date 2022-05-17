@@ -10,6 +10,9 @@ isPointer a b = prefix == postfix
         prefix = b `div` 100
         postfix = a `mod` 100
 
+difference :: Char -> Char -> Char -> Char -> Char -> Char -> Bool
+difference x1 x2 x3 x4 x5 x6 = x1 /= x2 && x1 /= x3 && x1 /= x4 && x1 /= x5 && x1 /= x6 && x2 /= x3 && x2 /= x4 && x2 /= x5 && x2 /= x6 && x3 /= x4 && x3 /= x5 && x3 /= x6 && x4 /= x5 && x4 /= x6 && x5 /= x6
+
 getValue :: Maybe [(Int, Char)] -> [(Int, Char)]
 getValue (Just l) = l
 getValue (Nothing) = []
@@ -36,12 +39,7 @@ sixths = Set.fromList (map sum [[fst x1, fst x2, fst x3, fst x4, fst x5, fst x6]
     x5 <- getValue (Map.lookup x4 listsMap),
     x6 <- getValue (Map.lookup x5 listsMap),
     elem x1 (getValue (Map.lookup x6 listsMap)),
-    (snd x1) /= (snd x2), (snd x1) /= (snd x2), (snd x1) /= (snd x3),
-    (snd x1) /= (snd x4), (snd x1) /= (snd x5), (snd x1) /= (snd x6),
-    (snd x2) /= (snd x3), (snd x2) /= (snd x4), (snd x2) /= (snd x5),
-    (snd x2) /= (snd x6), (snd x3) /= (snd x4), (snd x3) /= (snd x5),
-    (snd x3) /= (snd x5), (snd x3) /= (snd x6), (snd x4) /= (snd x5),
-    (snd x4) /= (snd x6), (snd x5) /= (snd x6)])
+    difference (snd x1) (snd x2) (snd x3) (snd x4) (snd x5) (snd x6)])
 
 main :: IO ()
 main = do
