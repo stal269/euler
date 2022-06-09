@@ -1,21 +1,8 @@
 from math import sqrt, floor
-
-class R:
-    def __init__(self, n, d):
-        self.n = n
-        self.d = d
-
-    def val(self):
-        return self.n / self.d
-
-    def __str__(self):
-        return str(self.n) + " / " + str(self.d)
+from utils import R, gcd
 
 def getBaseNumber(num):
     return floor(sqrt(num))
-
-def gcd(a, b):
-    return a if (b == 0) else gcd(b, a % b)
 
 def isOddPeriod(num):
     base = getBaseNumber(num)
@@ -37,4 +24,3 @@ def isOddPeriod(num):
     return len(period) % 2 == 1
 
 print (len([i for i in range(2, 10001) if isOddPeriod(i)]))
-
