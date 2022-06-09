@@ -6,6 +6,9 @@ class R:
     def val(self):
         return self.n / self.d
 
+    def inverse(self):
+        return R(self.d, self.n)
+
     def __str__(self):
         return str(self.n) + " / " + str(self.d)
 
