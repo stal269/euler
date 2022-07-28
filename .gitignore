@@ -3,8 +3,11 @@
 .DS_Store
 out/
 .vscode
-
+/**/dist-newstyle
 /**/project
 /**/target
 
 .metals/
+haskell/resources/
+__pycache__/
+workspace.code-workspace

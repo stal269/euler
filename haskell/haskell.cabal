@@ -22,7 +22,7 @@ maintainer:         shimital269@gmail.com
 extra-source-files: CHANGELOG.md
 
 executable haskell
-    main-is:          p58.hs
+    main-is:          p62.hs
 
     -- Modules included in this executable, other than Main.
     -- other-modules:
@@ -33,6 +33,8 @@ executable haskell
         base ^>=4.14.3.0,
         primes ==0.2.1.0,
         containers==0.6.5.1,
+        unordered-containers==0.2.19.1,
+        integer-roots==1.0.2.0,
         criterion==1.5.13.0,
     hs-source-dirs:   app
     default-language: Haskell2010
