@@ -1,6 +1,6 @@
-from utils import R
+from utils import R, add
 
-period = [1,2,1]
+per = [1,2,1]
 
 def sumOfDigits(num):
     counter = 0
@@ -10,26 +10,25 @@ def sumOfDigits(num):
 
     return counter
 
-def add(integer, rational):
-    return R(integer * rational.d + rational.n, rational.d)
 
-def getCoeff(idx):
+
+def getCoeff(idx, period):
     coeffIdx = idx % 3
     
     # we mul 2k
     if coeffIdx == 1:
-        mul = (idx // 3) + 1
+        mul = (idx // len(period)) + 1
         return period[coeffIdx] * mul
 
     return period[coeffIdx]
 
-def exp(currI, idx):
+def exp(currI, idx, period):
     if idx == 0:
-        return R(1, getCoeff(currI))
+        return R(1, getCoeff(currI, period))
 
-    coeff = getCoeff(currI)
-    next = exp(currI + 1, idx - 1)
+    coeff = getCoeff(currI, period)
+    next = exp(currI + 1, idx - 1, period)
 
     return add(coeff, next).inverse()
 
-print(sumOfDigits(add(2,exp(0, 98)).n))
+print(sumOfDigits(add(2,exp(0, 98, per)).n))
