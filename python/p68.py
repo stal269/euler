@@ -1,5 +1,3 @@
-
-
 from itertools import permutations
 
 internal = list(permutations([1,2,3,4,5]))
