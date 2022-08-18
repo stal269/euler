@@ -21,7 +21,7 @@ def buildNumber (i, e):
     sum4 = sum(gon4)
     sum5 = sum(gon5)
 
-    if (sum1 == sum2 and sum2 == sum3 and sum2 == sum3 and sum3 == sum4 and sum4 == sum5):
+    if (sum1 == sum2 and sum2 == sum3 and sum3 == sum4 and sum4 == sum5):
         digits = gon1 + gon2 + gon3 + gon4 + gon5
         return int("".join(map(convertStr, digits)))
     
